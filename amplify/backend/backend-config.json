@@ -1,0 +1,10 @@
+{
+	"auth": {
+		"hackorganizationb90e017f": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [],
+			"customAuth": false
+		}
+	}
+}
