@@ -1,0 +1,7 @@
+<canvas #scene 
+(window:resize)="resizeScene()"
+(mousemove)="onMouseMove($event)"
+(touchmove)="onTouchMove($event)"
+(touchend)="onTouchEnd($event)"
+></canvas>
+<img #hacklogo style="display: none" src="assets/hack_transparent_logo.png" alt="hacklogo">
