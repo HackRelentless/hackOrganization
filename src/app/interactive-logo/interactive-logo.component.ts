@@ -19,16 +19,22 @@ export class InteractiveLogoComponent implements OnInit {
   pww: number;
   pwh: number;
 
+  parentHeight: any;
+  parentWidth: any;
+
   constructor(public ngZone: NgZone) { }
 
   ngOnInit() {
     this.ngZone.runOutsideAngular(() => {
       this.sourceImg.nativeElement.onload = () => {
         this.ctx = this.canvas.nativeElement.getContext('2d');
-        this.ww = this.canvas.nativeElement.width = window.innerWidth;
-        this.wh = this.canvas.nativeElement.height = window.innerHeight;
-        this.pww = this.canvas.nativeElement.width = window.innerWidth;
-        this.pwh = this.canvas.nativeElement.height = window.innerHeight;
+        this.parentHeight = () => this.canvas.nativeElement.parentElement.parentElement.clientHeight;
+        this.parentWidth = () => this.canvas.nativeElement.parentElement.parentElement.clientWidth;
+
+        this.ww = this.canvas.nativeElement.width = this.parentWidth();
+        this.wh = this.canvas.nativeElement.height = this.parentHeight();
+        this.pww = this.canvas.nativeElement.width = this.parentWidth();
+        this.pwh = this.canvas.nativeElement.height = this.parentHeight();
         this.initScene();
       };
     });
@@ -36,8 +42,8 @@ export class InteractiveLogoComponent implements OnInit {
 
   resizeScene(e) {
     this.ngZone.runOutsideAngular(() => {
-      this.ww = window.innerWidth;
-      this.wh = window.innerHeight;
+      this.ww = this.parentWidth();
+      this.wh = this.parentHeight();
       this.canvas.nativeElement.width = this.ww;
       this.canvas.nativeElement.height = this.wh;
       if (Math.abs(this.ww - this.pww) > 100 || Math.abs(this.wh - this.pwh) > 100) {
@@ -59,27 +65,29 @@ export class InteractiveLogoComponent implements OnInit {
   }
 
   onMouseMove(e) {
+    e.preventDefault();
     this.mouse.x = e.clientX;
     this.mouse.y = e.clientY;
   }
 
   onTouchMove(e) {
+    e.preventDefault();
     if (e.touches.length > 0 ) {
       this.mouse.x = e.touches[0].clientX;
       this.mouse.y = e.touches[0].clientY;
-      console.log(e.touches[0]);
     }
   }
 
   onTouchEnd(e) {
+    e.preventDefault();
     this.mouse.x = -9999;
     this.mouse.y = -9999;
   }
 
   calculateWorkableArea() {
     // this.ngZone.runOutsideAngular(() => {
-      this.ww = window.innerWidth;
-      this.wh = window.innerHeight;
+      this.ww = this.parentWidth();
+      this.wh = this.parentHeight();
       this.ctx.clearRect(0, 0, this.canvas.nativeElement.width, this.canvas.nativeElement.height);
       let iw = this.sourceImg.nativeElement.width;
       let ih = this.sourceImg.nativeElement.height;
@@ -115,8 +123,9 @@ export class InteractiveLogoComponent implements OnInit {
         for (let j = 0; j < this.wh; j++) {
           if (j % 5 === 0) {
             if (data[((i + j * this.ww) * 4) + 3] > 150) {
-              const newParticle = new Particle(i, j, this.ww, this.wh);
-              this.particles.push(newParticle);
+              this.particles.push(
+                new Particle(i, j, this.ww, this.wh)
+              );
             }
           }
         }
