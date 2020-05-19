@@ -1,15 +1,66 @@
 #draw-area {
     height: 61vh;
+    padding:0;
 }
 
 .splash-title {
     margin: 0 auto;
     text-align: center;
-    font-size: 1.61rem;
     margin-top: 1.61rem;
+    animation: fadein 3s;
 }
 
-.splash-join {
+.center-action-btn {
     margin: 0 auto;
     margin-bottom: 1.61rem;
+    animation: fadein 3s;
+}
+
+#about-us {
+
+    .manifesto-section {
+        max-width: 728px;
+        padding: 24px;
+        margin: 0 auto;
+        word-break: break-word;
+        opacity: 1;
+        -webkit-animation-name: loadin;
+        -webkit-animation-duration: 1.6s;
+        animation-name: loadin;
+        animation-duration: 1.6s;
+    }
+
+    p {
+        font-size: 21px;
+        line-height: 1.6;
+        font-family: medium-content-serif-font, Georgia, Cambria, "Times New Roman", Times, serif;
+        font-weight: 400;
+        letter-spacing: -0.004em;
+        margin-top: 1.618em;
+    }
+}
+
+.manifesto {
+    transition: max-height 1.61s linear;
+    position: relative;
+    overflow: hidden;
+  }
+  .manifesto .read-more { 
+    position: absolute; 
+    bottom: 0; 
+    left: 0;
+    width: 100%; 
+    text-align: center; 
+    margin: 0;
+    padding: 3rem 0; 
+    padding-bottom: 0 !important;
+      
+    /* "transparent" only works here because == rgba(0,0,0,0) */
+    background-image: linear-gradient(to bottom, transparent, white);
+  }
+
+
+@keyframes fadein {
+    from {opacity: 0;}
+    to {opacity: 1;}
 }

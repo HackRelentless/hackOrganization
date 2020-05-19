@@ -21,6 +21,7 @@ export class InteractiveLogoComponent implements OnInit {
 
   parentHeight: any;
   parentWidth: any;
+  parentOffsetTop: any;
 
   constructor(public ngZone: NgZone) { }
 
@@ -30,6 +31,7 @@ export class InteractiveLogoComponent implements OnInit {
         this.ctx = this.canvas.nativeElement.getContext('2d');
         this.parentHeight = () => this.canvas.nativeElement.parentElement.parentElement.clientHeight;
         this.parentWidth = () => this.canvas.nativeElement.parentElement.parentElement.clientWidth;
+        this.parentOffsetTop = () => this.canvas.nativeElement.parentElement.parentElement.offsetTop;
 
         this.ww = this.canvas.nativeElement.width = this.parentWidth();
         this.wh = this.canvas.nativeElement.height = this.parentHeight();
@@ -67,14 +69,14 @@ export class InteractiveLogoComponent implements OnInit {
   onMouseMove(e) {
     e.preventDefault();
     this.mouse.x = e.clientX;
-    this.mouse.y = e.clientY;
+    this.mouse.y = e.clientY - this.parentOffsetTop();
   }
 
   onTouchMove(e) {
     e.preventDefault();
     if (e.touches.length > 0 ) {
       this.mouse.x = e.touches[0].clientX;
-      this.mouse.y = e.touches[0].clientY;
+      this.mouse.y = e.touches[0].clientY - this.parentOffsetTop();
     }
   }
 
@@ -91,6 +93,7 @@ export class InteractiveLogoComponent implements OnInit {
       this.ctx.clearRect(0, 0, this.canvas.nativeElement.width, this.canvas.nativeElement.height);
       let iw = this.sourceImg.nativeElement.width;
       let ih = this.sourceImg.nativeElement.height;
+      const widthRatio = iw / ih;
       let dx = (this.ww / 2) - (iw / 2);
       let dy = (this.wh / 2) - (ih / 2);
 
@@ -102,6 +105,7 @@ export class InteractiveLogoComponent implements OnInit {
         const diffY = dy - (this.wh / 4);
         ih = ih + diffY;
       }
+      iw = Math.min(iw, ih * widthRatio);
 
       dx = (this.ww / 2) - (iw / 2);
       dy = (this.wh / 2) - (ih / 2);
