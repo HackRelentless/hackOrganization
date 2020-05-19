@@ -29,15 +29,6 @@
         animation-name: loadin;
         animation-duration: 1.6s;
     }
-
-    p {
-        font-size: 21px;
-        line-height: 1.6;
-        font-family: medium-content-serif-font, Georgia, Cambria, "Times New Roman", Times, serif;
-        font-weight: 400;
-        letter-spacing: -0.004em;
-        margin-top: 1.618em;
-    }
 }
 
 .manifesto {
@@ -56,9 +47,9 @@
     padding-bottom: 0 !important;
       
     /* "transparent" only works here because == rgba(0,0,0,0) */
-    background-image: linear-gradient(to bottom, transparent, white);
+    background-image: linear-gradient(0deg, white 33%, transparent 100%);
   }
-
+  
 
 @keyframes fadein {
     from {opacity: 0;}

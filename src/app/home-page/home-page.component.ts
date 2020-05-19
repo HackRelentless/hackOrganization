@@ -23,7 +23,7 @@ export class HomePageComponent implements OnInit {
       button: 0,
       gradient: 'none'
     };
-    setTimeout(() => {
+    setTimeout(() => { 
       this.isReadingManifesto.gradient = 'linear-gradient(white, #3a3a4d)';
     }, 500);
   }
