@@ -16,19 +16,16 @@
     animation: fadein 3s;
 }
 
-#about-us {
-
-    .manifesto-section {
-        max-width: 728px;
-        padding: 24px;
-        margin: 0 auto;
-        word-break: break-word;
-        opacity: 1;
-        -webkit-animation-name: loadin;
-        -webkit-animation-duration: 1.6s;
-        animation-name: loadin;
-        animation-duration: 1.6s;
-    }
+.section {
+    max-width: 728px;
+    padding: 24px;
+    margin: 0 auto;
+    word-break: break-word;
+    opacity: 1;
+    -webkit-animation-name: loadin;
+    -webkit-animation-duration: 1.6s;
+    animation-name: loadin;
+    animation-duration: 1.6s;
 }
 
 .manifesto {

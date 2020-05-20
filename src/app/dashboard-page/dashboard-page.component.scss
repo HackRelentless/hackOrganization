@@ -17,6 +17,21 @@
     left: -6px;
     width: 0px;
   }
+
+  #outside-wrapper {
+    min-height: 100vh;
+    display: flex;
+    background-image: url('../../assets/hack_transparent_logo.png');
+    background-repeat: no-repeat;
+    background-position: top;
+    background-position-y: 1rem;
+  }
+
+  amplify-authenticator {
+    align-self: center;
+    margin: 0 auto;
+    opacity: 0.90;
+  }
   
   #sidebar-wrapper .sidebar-heading {
     padding: 0.875rem 1.25rem;

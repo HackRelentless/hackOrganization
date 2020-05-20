@@ -35,8 +35,8 @@
 </div>
 </section>
 <hr>
-<section id="about-us" [ngStyle]="{'background': isReadingManifesto.gradient}">
-  <div class="manifesto-section">
+<section [ngStyle]="{'background': isReadingManifesto.gradient}">
+  <div class="section">
     <div class="manifesto" [ngStyle]="{'max-height': isReadingManifesto.height}">
         <p>Since the beginning of human civilization, progress has been slow and steady. Time allowed for each new innovation to mature and be adopted by society at a pace even the most conservative could appreciate. But with the creation of the internet and the dawn of the digital era, innovation has had an explosive growth. Slow adaptation, in turn, has lead to perilous consequences.</p>
 
@@ -95,8 +95,7 @@
     </div>
   </div>
 </section>
-<hr>
-<section id="socials">
+<section id="socials" class="section">
   <p>Chat with us</p>
   <div class="container-fluid">
     <div class="row">
@@ -130,5 +129,7 @@
   </div>
 </section>
 <br>
-<section id="chapters"></section>
+<section id="chapters">
+  <!-- <hack-chapter-map></hack-chapter-map> -->
+</section>
 <section id="event-feed"></section>
