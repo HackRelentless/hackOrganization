@@ -6,10 +6,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dashboard-page.component.scss']
 })
 export class DashboardPageComponent implements OnInit {
-
+  isMenuCollapsed = true;
+  isSidebarToggled = false;
   constructor() { }
 
   ngOnInit() {
+    this.isMenuCollapsed = true;
+    this.isSidebarToggled = false;
   }
 
 }

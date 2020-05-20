@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 // 3rd Party imports
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab } from '@fortawesome/free-brands-svg-icons';
+import { fas } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AmplifyUIAngularModule } from '@aws-amplify/ui-angular';
@@ -45,5 +46,6 @@ Amplify.configure(awsconfig);
 export class AppModule {
   constructor() {
     library.add(fab);
+    library.add(fas);
   }
 }

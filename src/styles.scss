@@ -7,3 +7,31 @@ p {
     letter-spacing: -0.004em;
     margin-top: 1.618em;
 }
+
+:root {
+--amplify-primary-color: #2b7fb2;
+--amplify-primary-contrast: $amplify-white;
+--amplify-primary-tint: #5ca0ca;
+--amplify-primary-shade: #1f648f;
+--amplify-secondary-color: #2b7fb2;
+--amplify-secondary-contrast: $amplify-white;
+--amplify-secondary-tint: #5ca0ca;
+--amplify-secondary-shade: #1f648f;
+--amplify-tertiary-color: #2b7fb2;
+--amplify-tertiary-contrast: $amplify-white;
+--amplify-tertiary-tint: #5ca0ca;
+--amplify-tertiary-shade: #1f648f;
+--amplify-grey: white;
+--amplify-light-grey: #c4c4c4;
+--amplify-white: #181a1b;
+--amplify-red: #dd3f5b;
+
+// --amplify-secondary-color: #b27c2b;
+// --amplify-secondary-contrast: $amplify-white;
+// --amplify-secondary-tint: #cc9747;
+// --amplify-secondary-shade: #926420;
+// --amplify-tertiary-color: #b2392b;
+// --amplify-tertiary-contrast: $amplify-white;
+// --amplify-tertiary-tint: #cf5346;
+// --amplify-tertiary-shade: #9b2d21;
+}
