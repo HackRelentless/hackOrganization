@@ -13,7 +13,6 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AmplifyUIAngularModule } from '@aws-amplify/ui-angular';
-import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import Amplify from 'aws-amplify';
 import awsconfig from '../aws-exports';
 
@@ -22,6 +21,7 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { DashboardPageComponent } from './dashboard-page/dashboard-page.component';
 import { InteractiveLogoComponent } from './interactive-logo/interactive-logo.component';
 import { ChapterMapComponent } from './chapter-map/chapter-map.component';
+import { HttpClientModule } from '@angular/common/http';
 
 Amplify.configure(awsconfig);
 
@@ -38,10 +38,10 @@ Amplify.configure(awsconfig);
     BrowserModule,
     FormsModule,
     FontAwesomeModule,
-    LeafletModule,
     ReactiveFormsModule,
     NgbModule,
     CommonModule,
+    HttpClientModule,
     AppRoutingModule
   ],
   providers: [],
