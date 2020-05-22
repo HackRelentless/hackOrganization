@@ -7,9 +7,11 @@ import View from 'ol/View';
 import TileLayer from 'ol/layer/Tile';
 import XYZ from 'ol/source/XYZ';
 import {fromLonLat} from 'ol/proj';
-import ZoomToExtent from 'ol/control/ZoomToExtent';
-
-
+import Vector from 'ol/source/Vector';
+import Feature from 'ol/Feature';
+import Point from 'ol/geom/Point';
+import Style from 'ol/style/Style';
+import { Icon } from 'ol/style';
 @Component({
   selector: 'hack-chapter-map',
   templateUrl: './chapter-map.component.html',
@@ -18,12 +20,30 @@ import ZoomToExtent from 'ol/control/ZoomToExtent';
 export class ChapterMapComponent implements AfterViewInit {
 
   map: Map;
-  searchURL = 'https://www.openstreetmap.org/search?query=';
   addressLine = '';
+
+  testFeature;
+  hackIcon;
 
   constructor(public http: HttpClient) { }
 
   ngAfterViewInit() {
+
+    // this.testFeature = new Feature({
+    //   geometry: new Point([-75.165222, 39.952583]),
+    //   name: 'Philly Chapter',
+    // });
+
+    // this.hackIcon = new Style({
+    //   image: new Icon({
+    //     anchor: [0.5, 46],
+    //     src: '../../assets/hack_transparent_logo.png'
+    //   })
+    // });
+
+    // this.testFeature.setStyle(this.hackIcon);
+
+
     this.map = new Map({
       target: 'map',
       layers: [
@@ -37,20 +57,16 @@ export class ChapterMapComponent implements AfterViewInit {
         center: fromLonLat([-75.165222, 39.952583]),
         zoom: 15
       }),
-      // controls: defaultControls().extend([
-      //   new ZoomToExtent({
-      //     extent: [
-      //       813079.7791264898, 5929220.284081122,
-      //       848966.9639063801, 5936863.986909639
-      //     ]
-      //   })
-      // ])
     });
+
+    // let source = new Vector({});
+
   }
 
   findCoordinates() {
-    this.http.get(this.searchURL + this.addressLine, { observe: 'response', responseType: 'blob' }).subscribe(res => {
-      console.log(res);
+    this.http.get('https://nominatim.openstreetmap.org/search?q=' + this.addressLine + '&format=json').subscribe(res => {
+      const lookup = res[0];
+      this.map.getView().setCenter(fromLonLat([lookup.lon, lookup.lat]));
     });
   }
 
