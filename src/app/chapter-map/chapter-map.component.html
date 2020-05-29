@@ -6,21 +6,10 @@
   </div>
   <div class="col-sm-6">
       <form class="row">
-          <div class="form-group col-sm-5">
+          <div class="form-group col-sm-8">
               <label for="zip">Enter an address</label>
               <input class="form-control" id="address" name="address" [(ngModel)]="addressLine" placeholder="Can be any address, zipcode, city, etc">
           </div>
-          <div class="form-group col-sm-3">
-            <label for="zip">search radius (mi)</label>
-            <select class="form-control" name="radius" id="search-radius">
-                <option value="1">1</option>
-                <option value="5">5</option>
-                <option value="10">10</option>
-                <option value="25">25</option>
-                <option value="50">50</option>
-                <option value="100">100</option>
-            </select>
-        </div>
         <div class="form-group col-sm-3">
             <label class="invisible">search</label>
             <button class="btn btn-primary form-control" (click)="findCoordinates()">Search</button>
