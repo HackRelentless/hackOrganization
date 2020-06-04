@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../account.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'hack-account-settings',
@@ -11,8 +12,12 @@ export class AccountSettingsComponent implements OnInit {
 
   profileForm: FormGroup;
   isSuccessAlert = false;
+  isVerificationState = false;
+  verificationCode = '';
+  verificationModal: NgbModalRef;
+  successText = '';
 
-  constructor(public accountService: AccountService, private fb: FormBuilder) {
+  constructor(public accountService: AccountService, private fb: FormBuilder, public modalService: NgbModal) {
     this.profileForm = this.fb.group({
       preferred_username: [''],
       email: [''],
@@ -38,6 +43,13 @@ export class AccountSettingsComponent implements OnInit {
         this.loadUserSettings();
       } 
     });
+
+    this.accountService.fetchUserEvent.subscribe((shouldBypassCache) => {
+      if(shouldBypassCache) {
+        this.accountService.fetchCurrentUser('bypass');
+      }
+      this.accountService.fetchCurrentUser();
+    });
   }
 
   ngOnInit() { }
@@ -59,16 +71,48 @@ export class AccountSettingsComponent implements OnInit {
     }
   }
 
+  displaySuccess(message, isSuccess=true) {
+    this.successText = message;
+      this.isSuccessAlert = isSuccess;
+      setTimeout(() => {
+        this.isSuccessAlert = false;
+      }, 5000);
+  }
+
   updateUserSettings() {
     let profileValues = this.profileForm.value;
     for (let i in profileValues) {
       profileValues[i] = (profileValues[i] === undefined) ? '' : profileValues[i];
     }
     this.accountService.updateUser(profileValues).then(isSuccess => {
-      this.isSuccessAlert = isSuccess;
-      setTimeout(() => {
-        this.isSuccessAlert = false;
-      }, 5000);
+      this.displaySuccess('Changes Saved Successfully', isSuccess);
+    });
+  }
+
+  sendEmailVerification(verifycode) {
+    this.isVerificationState = true;
+    this.accountService.verifyEmail().then(isSent => {
+      if(isSent) {
+        // make modal for confirmation
+        this.verificationModal = this.modalService.open(verifycode, {centered: true});
+        this.verificationModal.result.then(closed => {
+          console.log('closed', closed);
+          this.isVerificationState = false;
+        }, dismissed => {
+          console.log('dismissed', dismissed);
+          this.isVerificationState = false;
+        });
+      }
+    })
+  }
+
+  confirmCode() {
+    this.accountService.verifyEmailWithCode(this.verificationCode).then(isVerified => {
+      this.displaySuccess('Email Verified');
+      this.verificationCode = '';
+    }).finally(() => {
+      this.isVerificationState = false;
+      this.verificationModal.dismiss();
     });
   }
 

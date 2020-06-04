@@ -11,19 +11,17 @@ export class AccountService {
 
   currentUser: any;
   loadUserEvent = new EventEmitter();
+  fetchUserEvent = new EventEmitter();
 
   constructor() {
-    console.log('account service on');
     this.fetchCurrentUser();
   }
 
-  fetchCurrentUser() {
-      Auth.currentAuthenticatedUser().then(user => {
-        console.log(user);
+  fetchCurrentUser(shouldBypass = false) {
+      Auth.currentAuthenticatedUser({bypassCache: shouldBypass}).then(user => {
         this.currentUser = user;
         this.loadUserEvent.emit(true);
       }).catch(err => {
-        console.log(err);
         this.currentUser = null;
         this.loadUserEvent.emit(false);
       });
@@ -32,13 +30,35 @@ export class AccountService {
 
   updateUser(userFormValues): Promise<boolean> {
     return new Promise((resolve, rej) => {
-      console.log('currentUse', this.currentUser);
-      console.log('vals', userFormValues);
       Auth.updateUserAttributes(this.currentUser, userFormValues).then(res => {
+        this.fetchUserEvent.emit();
         resolve(true);
       }).catch(err => {
-        console.log('err', err);
         resolve(false);
+      });
+    });
+  }
+
+  verifyEmail() {
+    return new Promise((res, rej) => {
+      // res(true);
+      Auth.verifyCurrentUserAttribute('email').then((data) => {
+        res(true);
+      }).catch(err =>{
+        res(false);
+        });
+    });
+  }
+
+  verifyEmailWithCode(code) {
+    return new Promise((res, rej) => {
+      // res(true);
+      Auth.verifyCurrentUserAttributeSubmit('email', code).then(data => {
+        this.fetchUserEvent.emit(true);
+        res(true);
+      }).catch(err => {
+        console.log('err', err)
+        res(false);
       });
     });
   }

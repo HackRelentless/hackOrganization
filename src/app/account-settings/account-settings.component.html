@@ -1,5 +1,5 @@
 
-<ngb-alert *ngIf="isSuccessAlert" (close)="isSuccessAlert = !isSuccessAlert"><strong>Changes Saved Successfully</strong></ngb-alert>
+<ngb-alert *ngIf="isSuccessAlert" (close)="isSuccessAlert = !isSuccessAlert"><strong>{{successText}}</strong></ngb-alert>
 
 <h4>User Details</h4>
 <form [formGroup]="profileForm">
@@ -10,6 +10,12 @@
       <fa-icon *ngIf="accountService.currentUser?.attributes.email_verified" [icon]="['fas', 'check']"
         class="fa-lg align-self-center pl-2"></fa-icon>
     </div>
+    <button *ngIf="!accountService.currentUser?.attributes.email_verified" class="btn btn-warning mt-1" (click)="sendEmailVerification(verifycode)">
+      Send Verification Code
+      <div *ngIf="isVerificationState" class="rotateanim d-inline-block fa-lg align-self-center ml-2">
+        <fa-icon  [icon]="['fas', 'sync-alt']"></fa-icon>
+      </div>
+    </button>
   </div>
   <div class="form-group">
     <label for="username">Username</label>
@@ -48,3 +54,25 @@
   </div>
   <button class="btn btn-primary" (click)="updateUserSettings()">Save Changes</button>
 </form>
+
+<ng-template #verifycode let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Check your Email</h4>
+    <a type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </a>
+  </div>
+  <div class="modal-body">
+    <form>
+      <p>We sent a verification code to your email. Please paste it below to confirm.</p>
+      <div class="form-group">
+        <div class="input-group">
+          <input class="form-control" placeholder="Verification Code" type="text" name="verificationCode" [(ngModel)]="verificationCode">
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" [disabled]="!verificationCode.trim()" (click)="confirmCode()">Confirm</button>
+  </div>
+</ng-template>
