@@ -22,6 +22,9 @@ import { DashboardPageComponent } from './dashboard-page/dashboard-page.componen
 import { InteractiveLogoComponent } from './interactive-logo/interactive-logo.component';
 import { ChapterMapComponent } from './chapter-map/chapter-map.component';
 import { HttpClientModule } from '@angular/common/http';
+import { AccountSettingsComponent } from './account-settings/account-settings.component';
+
+import { AccountService } from './account.service';
 
 Amplify.configure(awsconfig);
 
@@ -31,7 +34,8 @@ Amplify.configure(awsconfig);
     HomePageComponent,
     DashboardPageComponent,
     InteractiveLogoComponent,
-    ChapterMapComponent
+    ChapterMapComponent,
+    AccountSettingsComponent
   ],
   imports: [
     AmplifyUIAngularModule,
@@ -44,7 +48,7 @@ Amplify.configure(awsconfig);
     HttpClientModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [AccountService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

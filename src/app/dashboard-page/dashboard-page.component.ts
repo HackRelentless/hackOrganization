@@ -1,6 +1,8 @@
-import { Component, OnInit, NgZone, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, NgZone } from '@angular/core';
 import { Hub } from '@aws-amplify/core';
 import { Auth } from 'aws-amplify';
+
+import { AccountService } from '../account.service';
 
 @Component({
   selector: 'hack-dashboard-page',
@@ -11,39 +13,35 @@ export class DashboardPageComponent implements OnInit {
   isMenuCollapsed = true;
   isSidebarToggled = false;
   signInTrigger = false;
-  currentUser: any;
+  
 
-  constructor(public ngZone: NgZone, public cdr: ChangeDetectorRef) { }
+  constructor(public ngZone: NgZone, public cdr: ChangeDetectorRef, public accountService: AccountService) {
+    this.accountService.loadUserEvent.subscribe(isLoaded => {
+      if(isLoaded) {
+        this.signInTrigger = true;
+        this.cdr.detectChanges();
+      } else {
+        this.signInTrigger = false;
+        this.cdr.detectChanges();
+      }
+    });
+  }
 
   ngOnInit() {
     this.isMenuCollapsed = true;
     this.isSidebarToggled = false;
 
-    try {
-      Auth.currentAuthenticatedUser().then(user => {
-        this.currentUser = user;
-        this.cdr.detectChanges();
-      });
-    } catch (err) {
-      this.currentUser = null;
-    }
+    this.accountService.fetchCurrentUser();
 
     this.ngZone.run(() => {
       Hub.listen('auth', (authEvent) => {
         switch (authEvent.payload.event) {
-
           case 'signIn':
-            this.signInTrigger = true;
-            Auth.currentAuthenticatedUser().then(user => {
-              this.currentUser = user;
-              this.cdr.detectChanges();
-            });
+            this.accountService.fetchCurrentUser();
             break;
 
           case 'signOut':
-            this.signInTrigger = false;
-            this.currentUser = null;
-            this.cdr.detectChanges();
+            this.accountService.fetchCurrentUser();
             break;
 
         }

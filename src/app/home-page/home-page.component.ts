@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AccountService } from '../account.service';
 
 @Component({
   selector: 'hack-home-page',
@@ -12,7 +13,7 @@ export class HomePageComponent implements OnInit {
     gradient: 'none'
   };
 
-  constructor() { }
+  constructor(public accountService: AccountService) { }
 
   ngOnInit() {
   }

@@ -1,0 +1,50 @@
+
+<ngb-alert *ngIf="isSuccessAlert" (close)="isSuccessAlert = !isSuccessAlert"><strong>Changes Saved Successfully</strong></ngb-alert>
+
+<h4>User Details</h4>
+<form [formGroup]="profileForm">
+  <div class="form-group">
+    <label for="email">Email</label>
+    <div class="d-flex">
+      <input id="email" class="form-control" type="email" formControlName="email" />
+      <fa-icon *ngIf="accountService.currentUser?.attributes.email_verified" [icon]="['fas', 'check']"
+        class="fa-lg align-self-center pl-2"></fa-icon>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="username">Username</label>
+    <div class="d-flex">
+      <input id="username" class="form-control" type="text" formControlName="preferred_username" />
+    </div>
+  </div>
+  <hr>
+  <div class="form-group">
+    <label for="firstname">First name</label>
+    <div class="d-flex">
+      <input id="firstname" class="form-control" type="text"
+      formControlName="given_name" />
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="lastname">Last name</label>
+    <div class="d-flex">
+      <input id="lastname" class="form-control" type="text" formControlName="family_name" />
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="phone-number">Phone Number</label>
+    <div class="d-flex">
+      <input id="phone-number" class="form-control" type="tel"
+      formControlName="phone_number" />
+      <fa-icon *ngIf="accountService.currentUser?.attributes.phone_number_verified" [icon]="['fas', 'check']"
+        class="fa-lg align-self-center pl-2"></fa-icon>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="bio">Bio</label>
+    <div class="d-flex">
+      <textarea id="bio" class="form-control" type="text" formControlName="custom:bio"></textarea>
+    </div>
+  </div>
+  <button class="btn btn-primary" (click)="updateUserSettings()">Save Changes</button>
+</form>

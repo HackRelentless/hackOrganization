@@ -1,37 +1,23 @@
 {
     "dev": {
         "awscloudformation": {
-            "AuthRoleName": "amplify-hackorganization-dev-200415-authRole",
-            "UnauthRoleArn": "arn:aws:iam::246327087790:role/amplify-hackorganization-dev-200415-unauthRole",
-            "AuthRoleArn": "arn:aws:iam::246327087790:role/amplify-hackorganization-dev-200415-authRole",
-            "Region": "us-east-2",
-            "DeploymentBucketName": "amplify-hackorganization-dev-200415-deployment",
-            "UnauthRoleName": "amplify-hackorganization-dev-200415-unauthRole",
-            "StackName": "amplify-hackorganization-dev-200415",
-            "StackId": "arn:aws:cloudformation:us-east-2:246327087790:stack/amplify-hackorganization-dev-200415/a980fb90-963f-11ea-ad8c-02c46d078154",
-            "AmplifyAppId": "d1thpxbo4h8l4e"
-        },
-        "categories": {
-            "auth": {
-                "hackorganizationb90e017f": {}
-            }
-        }
-    },
-    "develop": {
-        "awscloudformation": {
-            "AuthRoleName": "amplify-hackorganization-develop-135117-authRole",
-            "UnauthRoleArn": "arn:aws:iam::246327087790:role/amplify-hackorganization-develop-135117-unauthRole",
-            "AuthRoleArn": "arn:aws:iam::246327087790:role/amplify-hackorganization-develop-135117-authRole",
+            "AuthRoleName": "amplify-hackorganization-dev-222751-authRole",
+            "UnauthRoleArn": "arn:aws:iam::246327087790:role/amplify-hackorganization-dev-222751-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::246327087790:role/amplify-hackorganization-dev-222751-authRole",
             "Region": "us-east-1",
-            "DeploymentBucketName": "amplify-hackorganization-develop-135117-deployment",
-            "UnauthRoleName": "amplify-hackorganization-develop-135117-unauthRole",
-            "StackName": "amplify-hackorganization-develop-135117",
-            "StackId": "arn:aws:cloudformation:us-east-1:246327087790:stack/amplify-hackorganization-develop-135117/d612cd10-a10b-11ea-a3e0-0a6046b66d41",
-            "AmplifyAppId": "d2qpff6eixho3t"
+            "DeploymentBucketName": "amplify-hackorganization-dev-222751-deployment",
+            "UnauthRoleName": "amplify-hackorganization-dev-222751-unauthRole",
+            "StackName": "amplify-hackorganization-dev-222751",
+            "StackId": "arn:aws:cloudformation:us-east-1:246327087790:stack/amplify-hackorganization-dev-222751/552b4ba0-a2e6-11ea-a9c1-12e346dd5d0c",
+            "AmplifyAppId": "debgvfi88uw6t"
         },
         "categories": {
+            "function": {
+                "hackorganization57fdeb75DefineAuthChallenge": {},
+                "hackorganization57fdeb75CreateAuthChallenge": {}
+            },
             "auth": {
-                "hackorganizationb90e017f": {}
+                "hackorganization9f229a6d": {}
             }
         }
     }
