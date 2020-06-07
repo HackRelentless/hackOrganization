@@ -25,6 +25,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
 
 import { AccountService } from './account.service';
+import { ManifestoPageComponent } from './manifesto-page/manifesto-page.component';
 
 Amplify.configure(awsconfig);
 
@@ -35,7 +36,8 @@ Amplify.configure(awsconfig);
     DashboardPageComponent,
     InteractiveLogoComponent,
     ChapterMapComponent,
-    AccountSettingsComponent
+    AccountSettingsComponent,
+    ManifestoPageComponent
   ],
   imports: [
     AmplifyUIAngularModule,

@@ -1,5 +1,5 @@
 
-<ngb-alert *ngIf="isSuccessAlert" (close)="isSuccessAlert = !isSuccessAlert"><strong>{{successText}}</strong></ngb-alert>
+<ngb-alert [type]="alertType" *ngIf="isSuccessAlert" (close)="isSuccessAlert = !isSuccessAlert"><strong>{{successText}}</strong></ngb-alert>
 
 <h4>User Details</h4>
 <form [formGroup]="profileForm">

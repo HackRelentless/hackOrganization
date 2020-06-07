@@ -41,7 +41,7 @@ export class AccountService {
 
   verifyEmail() {
     return new Promise((res, rej) => {
-      // res(true);
+      // res(false); // for debugging
       Auth.verifyCurrentUserAttribute('email').then((data) => {
         res(true);
       }).catch(err =>{
@@ -52,7 +52,7 @@ export class AccountService {
 
   verifyEmailWithCode(code) {
     return new Promise((res, rej) => {
-      // res(true);
+      // res(true); // for debugging
       Auth.verifyCurrentUserAttributeSubmit('email', code).then(data => {
         this.fetchUserEvent.emit(true);
         res(true);

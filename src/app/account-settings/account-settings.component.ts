@@ -12,9 +12,11 @@ export class AccountSettingsComponent implements OnInit {
 
   profileForm: FormGroup;
   isSuccessAlert = false;
+  alertType = 'warning';
   isVerificationState = false;
   verificationCode = '';
   verificationModal: NgbModalRef;
+  alertTimeout: any;
   successText = '';
 
   constructor(public accountService: AccountService, private fb: FormBuilder, public modalService: NgbModal) {
@@ -71,11 +73,14 @@ export class AccountSettingsComponent implements OnInit {
     }
   }
 
-  displaySuccess(message, isSuccess=true) {
+  displaySuccess(message, isSuccess=true, isError=false) {
     this.successText = message;
       this.isSuccessAlert = isSuccess;
-      setTimeout(() => {
+      this.alertType = (isError)? 'danger' : 'warning';
+      this.alertTimeout = setTimeout((x) => {
+        console.log('x', x);
         this.isSuccessAlert = false;
+        clearTimeout(this.alertTimeout);
       }, 5000);
   }
 
@@ -102,16 +107,23 @@ export class AccountSettingsComponent implements OnInit {
           console.log('dismissed', dismissed);
           this.isVerificationState = false;
         });
+      } else {
+        this.displaySuccess('Could not send confirmation code at this time, please try again later.', true, true);
+        this.isVerificationState = false;
       }
     })
   }
 
   confirmCode() {
     this.accountService.verifyEmailWithCode(this.verificationCode).then(isVerified => {
-      this.displaySuccess('Email Verified');
-      this.verificationCode = '';
+      if(isVerified) {
+        this.displaySuccess('Email Verified');
+      } else {
+        this.displaySuccess('Code was incorrect. Please retry.', true, true);
+      }
     }).finally(() => {
       this.isVerificationState = false;
+      this.verificationCode = '';
       this.verificationModal.dismiss();
     });
   }

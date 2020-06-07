@@ -18,15 +18,4 @@ export class HomePageComponent implements OnInit {
   ngOnInit() {
   }
 
-  readMore() {
-    this.isReadingManifesto = {
-      height: '100%',
-      button: 0,
-      gradient: 'none'
-    };
-    setTimeout(() => { 
-      this.isReadingManifesto.gradient = 'linear-gradient(white, #3a3a4d)';
-    }, 500);
-  }
-
 }
