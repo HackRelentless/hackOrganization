@@ -48,7 +48,7 @@ export class AccountSettingsComponent implements OnInit {
 
     this.accountService.fetchUserEvent.subscribe((shouldBypassCache) => {
       if(shouldBypassCache) {
-        this.accountService.fetchCurrentUser('bypass');
+        this.accountService.fetchCurrentUser(true);
       }
       this.accountService.fetchCurrentUser();
     });

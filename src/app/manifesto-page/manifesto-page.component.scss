@@ -1,5 +1,4 @@
 .manifesto {
-    transition: max-height 1.61s linear;
     position: relative;
     overflow: hidden;
     max-width: 728px;
@@ -11,4 +10,15 @@
 
   .section {
     background: linear-gradient(white, #3a3a4d);
+}
+
+#particles-js {
+  width: 100vw;
+  height: 100vh;
+  // top: 0;
+  // left: 0;
+  position: fixed;
+  canvas{
+    background: transparent;
+  }
 }
