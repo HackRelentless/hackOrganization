@@ -17,5 +17,11 @@
             "providerPlugin": "awscloudformation",
             "dependsOn": []
         }
+    },
+    "hosting": {
+        "amplifyhosting": {
+            "service": "amplifyhosting",
+            "type": "cicd"
+        }
     }
 }

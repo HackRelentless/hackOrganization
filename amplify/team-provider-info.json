@@ -1,23 +1,29 @@
 {
-    "dev": {
+    "develop": {
         "awscloudformation": {
-            "AuthRoleName": "amplify-hackorganization-dev-222751-authRole",
-            "UnauthRoleArn": "arn:aws:iam::246327087790:role/amplify-hackorganization-dev-222751-unauthRole",
-            "AuthRoleArn": "arn:aws:iam::246327087790:role/amplify-hackorganization-dev-222751-authRole",
+            "AuthRoleName": "amplify-hackorganization-develop-00145-authRole",
+            "UnauthRoleArn": "arn:aws:iam::246327087790:role/amplify-hackorganization-develop-00145-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::246327087790:role/amplify-hackorganization-develop-00145-authRole",
             "Region": "us-east-1",
-            "DeploymentBucketName": "amplify-hackorganization-dev-222751-deployment",
-            "UnauthRoleName": "amplify-hackorganization-dev-222751-unauthRole",
-            "StackName": "amplify-hackorganization-dev-222751",
-            "StackId": "arn:aws:cloudformation:us-east-1:246327087790:stack/amplify-hackorganization-dev-222751/552b4ba0-a2e6-11ea-a9c1-12e346dd5d0c",
-            "AmplifyAppId": "d3a10rrl5qwqke"
+            "DeploymentBucketName": "amplify-hackorganization-develop-00145-deployment",
+            "UnauthRoleName": "amplify-hackorganization-develop-00145-unauthRole",
+            "StackName": "amplify-hackorganization-develop-00145",
+            "StackId": "arn:aws:cloudformation:us-east-1:246327087790:stack/amplify-hackorganization-develop-00145/3c6dda30-c7e2-11ea-8e29-0e0494eb61ff",
+            "AmplifyAppId": "d2ldfb29aobf6g"
         },
         "categories": {
+            "auth": {
+                "hackorganization9f229a6d": {}
+            },
             "function": {
                 "hackorganization57fdeb75DefineAuthChallenge": {},
                 "hackorganization57fdeb75CreateAuthChallenge": {}
             },
-            "auth": {
-                "hackorganization9f229a6d": {}
+            "hosting": {
+                "amplifyhosting": {
+                    "appId": "d2ldfb29aobf6g",
+                    "type": "cicd"
+                }
             }
         }
     }
