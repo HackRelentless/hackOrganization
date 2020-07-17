@@ -9,7 +9,7 @@
             "UnauthRoleName": "amplify-hackorganization-dev-222751-unauthRole",
             "StackName": "amplify-hackorganization-dev-222751",
             "StackId": "arn:aws:cloudformation:us-east-1:246327087790:stack/amplify-hackorganization-dev-222751/552b4ba0-a2e6-11ea-a9c1-12e346dd5d0c",
-            "AmplifyAppId": "debgvfi88uw6t"
+            "AmplifyAppId": "d3a10rrl5qwqke"
         },
         "categories": {
             "function": {
