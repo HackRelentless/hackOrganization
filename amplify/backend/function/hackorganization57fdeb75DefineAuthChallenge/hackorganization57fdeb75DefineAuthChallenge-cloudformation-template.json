@@ -94,7 +94,7 @@
 				"Runtime": "nodejs10.x",
 				"Timeout": "25",
 				"Code": {
-					"S3Bucket": "amplify-hackorganization-dev-222751-deployment",
+					"S3Bucket": "amplify-hackorganization-develop-00145-deployment",
 					"S3Key": "amplify-builds/hackorganization57fdeb75DefineAuthChallenge-4d4f7564647156796d6c-build.zip"
 				}
 			}
