@@ -26,6 +26,7 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
 
 import { AccountService } from './account.service';
 import { ManifestoPageComponent } from './manifesto-page/manifesto-page.component';
+import { LoginComponent } from './login/login.component';
 
 Amplify.configure(awsconfig);
 
@@ -37,7 +38,8 @@ Amplify.configure(awsconfig);
     InteractiveLogoComponent,
     ChapterMapComponent,
     AccountSettingsComponent,
-    ManifestoPageComponent
+    ManifestoPageComponent,
+    LoginComponent
   ],
   imports: [
     AmplifyUIAngularModule,

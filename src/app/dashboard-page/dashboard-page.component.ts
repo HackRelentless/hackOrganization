@@ -1,6 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, NgZone } from '@angular/core';
-import { Hub } from '@aws-amplify/core';
-import { Auth } from 'aws-amplify';
+import { Component, OnInit } from '@angular/core';
 
 import { AccountService } from '../account.service';
 
@@ -15,38 +13,13 @@ export class DashboardPageComponent implements OnInit {
   signInTrigger = false;
   
 
-  constructor(public ngZone: NgZone, public cdr: ChangeDetectorRef, public accountService: AccountService) {
-    this.accountService.loadUserEvent.subscribe(isLoaded => {
-      if(isLoaded) {
-        this.signInTrigger = true;
-        this.cdr.detectChanges();
-      } else {
-        this.signInTrigger = false;
-        this.cdr.detectChanges();
-      }
-    });
+  constructor(public accountService: AccountService) {
   }
 
   ngOnInit() {
     this.isMenuCollapsed = true;
     this.isSidebarToggled = false;
-
     this.accountService.fetchCurrentUser();
-
-    this.ngZone.run(() => {
-      Hub.listen('auth', (authEvent) => {
-        switch (authEvent.payload.event) {
-          case 'signIn':
-            this.accountService.fetchCurrentUser();
-            break;
-
-          case 'signOut':
-            this.accountService.fetchCurrentUser();
-            break;
-
-        }
-      });
-    });
   }
 
 }
