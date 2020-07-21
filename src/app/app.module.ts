@@ -15,6 +15,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AmplifyUIAngularModule } from '@aws-amplify/ui-angular';
 import Amplify from 'aws-amplify';
 import awsconfig from '../aws-exports';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 
 // Components
 import { HomePageComponent } from './home-page/home-page.component';
@@ -27,6 +29,7 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
 import { AccountService } from './account.service';
 import { ManifestoPageComponent } from './manifesto-page/manifesto-page.component';
 import { LoginComponent } from './login/login.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 Amplify.configure(awsconfig);
 
@@ -50,7 +53,10 @@ Amplify.configure(awsconfig);
     NgbModule,
     CommonModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    BsDropdownModule.forRoot(),
+    NgxIntlTelInputModule,
   ],
   providers: [AccountService],
   bootstrap: [AppComponent]

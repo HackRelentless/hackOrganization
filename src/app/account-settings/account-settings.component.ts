@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../account.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { SearchCountryField, TooltipLabel, CountryISO } from 'ngx-intl-tel-input';
 
 @Component({
   selector: 'hack-account-settings',
@@ -19,11 +20,16 @@ export class AccountSettingsComponent implements OnInit {
   alertTimeout: any;
   successText = '';
 
+  SearchCountryField = SearchCountryField;
+	TooltipLabel = TooltipLabel;
+	CountryISO = CountryISO;
+	preferredCountries: CountryISO[] = [CountryISO.UnitedStates, CountryISO.UnitedKingdom];
+
   constructor(public accountService: AccountService, private fb: FormBuilder, public modalService: NgbModal) {
     this.profileForm = this.fb.group({
       preferred_username: [''],
       email: [''],
-      phone_number: [''],
+      phone_number: [undefined],
       given_name: [''],
       family_name: [''],
       'custom:bio': [''],
@@ -88,6 +94,12 @@ export class AccountSettingsComponent implements OnInit {
     let profileValues = this.profileForm.value;
     for (let i in profileValues) {
       profileValues[i] = (profileValues[i] === undefined) ? '' : profileValues[i];
+      if(profileValues[i] != '') {
+        // further edits needed for the data
+        if(i === 'phone_number') {
+          profileValues[i] = profileValues[i]['e164Number'];
+        }
+      }
     }
     this.accountService.updateUser(profileValues).then(isSuccess => {
       this.displaySuccess('Changes Saved Successfully', isSuccess);
