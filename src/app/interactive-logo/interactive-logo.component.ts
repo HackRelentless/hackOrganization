@@ -7,8 +7,8 @@ import { Particle } from './particle';
   styleUrls: ['./interactive-logo.component.scss']
 })
 export class InteractiveLogoComponent implements OnInit {
-  @ViewChild('scene') canvas: ElementRef<HTMLCanvasElement>;
-  @ViewChild('hacklogo') sourceImg: ElementRef<HTMLImageElement>;
+  @ViewChild('scene', {static: true}) canvas: ElementRef<HTMLCanvasElement>;
+  @ViewChild('hacklogo', {static: true}) sourceImg: ElementRef<HTMLImageElement>;
   ctx: CanvasRenderingContext2D;
   particles: Array<Particle>;
   amount = 0;

@@ -1,8 +1,8 @@
-import { Injectable, Output, EventEmitter } from '@angular/core';
+import { Injectable, Output, EventEmitter, NgZone } from '@angular/core';
 
 import { Hub } from '@aws-amplify/core';
 import { Auth } from 'aws-amplify';
-import { resolve } from 'url';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +13,26 @@ export class AccountService {
   loadUserEvent = new EventEmitter();
   fetchUserEvent = new EventEmitter();
 
-  constructor() {
+  constructor(public ngZone: NgZone, public router: Router) {
     this.fetchCurrentUser();
+
+    this.ngZone.run(() => {
+      Hub.listen('auth', (authEvent) => {
+        switch (authEvent.payload.event) {
+          case 'signIn':
+            console.log('signed in');
+            this.fetchCurrentUser();
+            this.router.navigate(['/dashboard']);
+            break;
+
+          case 'signOut':
+            console.log('signed out');
+            this.fetchCurrentUser();
+            this.router.navigate(['/login']);
+            break;
+        }
+      });
+    });
   }
 
   fetchCurrentUser(shouldBypass = false) {
@@ -26,7 +44,6 @@ export class AccountService {
         this.loadUserEvent.emit(false);
       });
   }
-
 
   updateUser(userFormValues): Promise<boolean> {
     return new Promise((resolve, rej) => {

@@ -40,8 +40,24 @@
   <div class="form-group">
     <label for="phone-number">Phone Number</label>
     <div class="d-flex">
-      <input id="phone-number" class="form-control" type="tel"
-      formControlName="phone_number" />
+      <ngx-intl-tel-input
+        [inputId]="'phone-number'"
+        [cssClass]="'form-control'" 
+        [preferredCountries]="preferredCountries"
+        [enableAutoCountrySelect]="false" 
+        [enablePlaceholder]="true" 
+        [searchCountryFlag]="true"
+        [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+        [selectFirstCountry]="false" 
+        [selectedCountryISO]="CountryISO.UnitedStates"
+        [maxLength]="15" 
+        [tooltipField]="TooltipLabel.Name" 
+        [phoneValidation]="true" 
+        [separateDialCode]="true"
+        name="phone_number" formControlName="phone_number"
+        >
+      </ngx-intl-tel-input>
+
       <fa-icon *ngIf="accountService.currentUser?.attributes.phone_number_verified" [icon]="['fas', 'check']"
         class="fa-lg align-self-center pl-2"></fa-icon>
     </div>

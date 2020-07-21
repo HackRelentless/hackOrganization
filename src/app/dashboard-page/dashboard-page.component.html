@@ -1,13 +1,4 @@
-<div id="outside-wrapper" [class.flexed]="!(accountService.currentUser || signInTrigger)">
-<amplify-authenticator username-alias="email">
-
-<amplify-sign-up 
-  [formFields]="[{type: 'email'}, {type: 'password'}]" 
-  usernameAlias="email" 
-  slot="sign-up">
-</amplify-sign-up>
-
-
+<div id="outside-wrapper">
   <div [class.toggled]="isSidebarToggled" class="d-flex" id="wrapper">
     <!-- Sidebar -->
     <div class="bg-light border-right" id="sidebar-wrapper">
@@ -32,7 +23,4 @@
     </div>
 
   </div>
-
-  
-</amplify-authenticator>
 </div>
