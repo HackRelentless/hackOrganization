@@ -1,5 +1,6 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
 import { AccountService } from './account.service';
+import { MatrixService } from './matrix.service';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,7 @@ export class AppComponent {
   title = 'hackOrganization';
   isSignedIn = false;
 
-  constructor(public accountService: AccountService, public cdr: ChangeDetectorRef) {
+  constructor(public matrixService: MatrixService, public accountService: AccountService, public cdr: ChangeDetectorRef) {
     this.accountService.loadUserEvent.subscribe(isLoaded => {
       if(isLoaded) {
         this.isSignedIn = true;

@@ -92,3 +92,23 @@
     <button type="button" class="btn btn-outline-dark" [disabled]="!verificationCode.trim()" (click)="confirmCode()">Confirm</button>
   </div>
 </ng-template>
+
+
+<br><hr>
+
+<h4>Chat Interface</h4>
+<form>
+  <div class="form-group">
+    <label for="enable-chat">Enable Chat</label>
+    <div class="d-flex">
+      <ui-switch defaultBgColor="red" [loading]="isLoading" 
+      [beforeChange]="isLoading"
+      (change)="onChange($event)"
+      (click)="onClick($event)"
+      >
+        <i class="fa fa-spinner fa-pulse" *ngIf="isLoading"></i>
+      </ui-switch>
+    </div>
+  </div>
+  
+</form>

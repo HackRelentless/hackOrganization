@@ -3,6 +3,8 @@ import { AccountService } from '../account.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { SearchCountryField, TooltipLabel, CountryISO } from 'ngx-intl-tel-input';
+import { Observable } from 'rxjs';
+import { MatrixService } from '../matrix.service';
 
 @Component({
   selector: 'hack-account-settings',
@@ -20,12 +22,17 @@ export class AccountSettingsComponent implements OnInit {
   alertTimeout: any;
   successText = '';
 
+  isLoading = false;
+  isChatStateChanged: Observable<boolean> = new Observable(() => {
+
+  })
+
   SearchCountryField = SearchCountryField;
 	TooltipLabel = TooltipLabel;
 	CountryISO = CountryISO;
 	preferredCountries: CountryISO[] = [CountryISO.UnitedStates, CountryISO.UnitedKingdom];
 
-  constructor(public accountService: AccountService, private fb: FormBuilder, public modalService: NgbModal) {
+  constructor(public accountService: AccountService, public matrixService: MatrixService, private fb: FormBuilder, public modalService: NgbModal) {
     this.profileForm = this.fb.group({
       preferred_username: [''],
       email: [''],
@@ -139,5 +146,29 @@ export class AccountSettingsComponent implements OnInit {
       this.verificationModal.dismiss();
     });
   }
+
+
+  onChange(event) {
+    console.log('event', event);
+  }
+
+  onClick(event) {
+    this.isLoading = true;
+    this.matrixService.checkUsernameAvailibility().then(isAvailable => {
+      if(isAvailable) {
+        this.matrixService.registerUser().then(result => {
+          console.log('result', result);
+          //see if still available
+          this.matrixService.checkUsernameAvailibility().then(verified => {
+            console.log('is still available', verified);
+          });
+        });
+      }
+    }).catch(err => {
+      console.log('err', err);
+    })
+
+  }
+
 
 }

@@ -40,7 +40,8 @@
         "website",
         "zoneinfo",
         "email",
-        "custom:bio"
+        "custom:bio",
+        "custom:matrix-auth-json"
     ],
     "userpoolClientReadAttributes": [
         "address",
@@ -62,7 +63,8 @@
         "zoneinfo",
         "email_verified",
         "phone_number_verified",
-        "custom:bio"
+        "custom:bio",
+        "custom:matrix-auth-json"
     ],
     "userpoolClientLambdaRole": "hackor9f229a6d_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": true,

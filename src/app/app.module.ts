@@ -17,6 +17,7 @@ import Amplify from 'aws-amplify';
 import awsconfig from '../aws-exports';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
+import { UiSwitchModule } from 'ngx-ui-switch';
 
 // Components
 import { HomePageComponent } from './home-page/home-page.component';
@@ -57,6 +58,7 @@ Amplify.configure(awsconfig);
     BrowserAnimationsModule,
     BsDropdownModule.forRoot(),
     NgxIntlTelInputModule,
+    UiSwitchModule
   ],
   providers: [AccountService],
   bootstrap: [AppComponent]
