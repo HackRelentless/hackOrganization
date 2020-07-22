@@ -157,12 +157,11 @@ export class AccountSettingsComponent implements OnInit {
     this.matrixService.checkUsernameAvailibility().then(isAvailable => {
       if(isAvailable) {
         this.matrixService.registerUser().then(result => {
-          console.log('result', result);
-          //see if still available
-          this.matrixService.checkUsernameAvailibility().then(verified => {
-            console.log('is still available', verified);
-          });
+          console.log('user registered');
         });
+      } else {
+        console.log('username already registered');
+        this.matrixService.setDisplayName();
       }
     }).catch(err => {
       console.log('err', err);

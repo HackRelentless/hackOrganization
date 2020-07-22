@@ -38,6 +38,9 @@ export class AccountService {
   fetchCurrentUser(shouldBypass = false) {
       Auth.currentAuthenticatedUser({bypassCache: shouldBypass}).then(user => {
         this.currentUser = user;
+        if(this.currentUser.attributes['custom:matrix-auth-json']) {
+          this.currentUser.attributes['custom:matrix-auth-json'] = JSON.parse(this.currentUser.attributes['custom:matrix-auth-json']);
+        }
         this.loadUserEvent.emit(true);
       }).catch(err => {
         this.currentUser = null;
