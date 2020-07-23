@@ -3,7 +3,6 @@ import { AccountService } from '../account.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { SearchCountryField, TooltipLabel, CountryISO } from 'ngx-intl-tel-input';
-import { Observable } from 'rxjs';
 import { MatrixService } from '../matrix.service';
 
 @Component({
@@ -23,9 +22,6 @@ export class AccountSettingsComponent implements OnInit {
   successText = '';
 
   isLoading = false;
-  isChatStateChanged: Observable<boolean> = new Observable(() => {
-
-  })
 
   SearchCountryField = SearchCountryField;
 	TooltipLabel = TooltipLabel;
@@ -147,26 +143,14 @@ export class AccountSettingsComponent implements OnInit {
     });
   }
 
-
-  onChange(event) {
-    console.log('event', event);
-  }
-
-  onClick(event) {
+  toggleChat() {
     this.isLoading = true;
-    this.matrixService.checkUsernameAvailibility().then(isAvailable => {
-      if(isAvailable) {
-        this.matrixService.registerUser().then(result => {
-          console.log('user registered');
-        });
-      } else {
-        console.log('username already registered');
-        this.matrixService.setDisplayName();
-      }
-    }).catch(err => {
-      console.log('err', err);
-    })
-
+    let toggle = (this.accountService.isChatEnabled) ? 'false': 'true';
+    this.accountService.updateUser({
+      'custom:chat-enabled': toggle
+    }).then(isChanged => {
+      this.isLoading = false;
+    });
   }
 
 

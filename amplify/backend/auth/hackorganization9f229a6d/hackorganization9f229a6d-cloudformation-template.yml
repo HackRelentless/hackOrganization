@@ -195,6 +195,14 @@ Resources:
           StringAttributeConstraints:
             MaxLength: 256
             MinLength: 1
+
+        -
+          AttributeDataType: "String"
+          Mutable: true
+          Name: chat-enabled
+          StringAttributeConstraints:
+            MaxLength: 256
+            MinLength: 1
             
         -
           AttributeDataType: "String"

@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 export class AccountService {
 
   currentUser: any;
+  isChatEnabled = false;
   loadUserEvent = new EventEmitter();
   fetchUserEvent = new EventEmitter();
 

@@ -41,7 +41,8 @@
         "zoneinfo",
         "email",
         "custom:bio",
-        "custom:matrix-auth-json"
+        "custom:matrix-auth-json",
+        "custom:chat-enabled"
     ],
     "userpoolClientReadAttributes": [
         "address",
@@ -64,7 +65,8 @@
         "email_verified",
         "phone_number_verified",
         "custom:bio",
-        "custom:matrix-auth-json"
+        "custom:matrix-auth-json",
+        "custom:chat-enabled"
     ],
     "userpoolClientLambdaRole": "hackor9f229a6d_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": true,
