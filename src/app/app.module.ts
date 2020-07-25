@@ -31,6 +31,9 @@ import { AccountService } from './account.service';
 import { ManifestoPageComponent } from './manifesto-page/manifesto-page.component';
 import { LoginComponent } from './login/login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ChatConsoleComponent } from './chat-console/chat-console.component';
+import { BaseChatComponent } from './base-chat/base-chat.component';
+import { ChatInterfaceComponent } from './chat-interface/chat-interface.component';
 
 Amplify.configure(awsconfig);
 
@@ -43,7 +46,10 @@ Amplify.configure(awsconfig);
     ChapterMapComponent,
     AccountSettingsComponent,
     ManifestoPageComponent,
-    LoginComponent
+    LoginComponent,
+    ChatConsoleComponent,
+    BaseChatComponent,
+    ChatInterfaceComponent
   ],
   imports: [
     AmplifyUIAngularModule,

@@ -1,0 +1,13 @@
+<hack-base-chat [headerText]="'Public Rooms'">
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item d-flex justify-content-between align-items-center" 
+        *ngFor="let room of matrixService.publicRooms">
+            {{room.name}}
+            <span class="badge">
+                <fa-icon [icon]="['fas', 'users']"></fa-icon>
+                {{room.members.length}}
+            </span>
+        </li>
+    </ul>
+</hack-base-chat>
+    

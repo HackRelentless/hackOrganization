@@ -1,0 +1,19 @@
+.outline {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 15rem;
+    background-color: rgb(200, 200, 200);
+    border: 1px solid gray;
+    border-bottom: 0px;
+}
+
+.expanded {
+    height: 20rem;
+}
+
+.scrollable-content-area{
+    max-height: 20rem;
+    overflow-y:scroll;
+    -webkit-overflow-scrolling: touch;
+}

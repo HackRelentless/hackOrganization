@@ -1,0 +1,8 @@
+<div *ngIf="(accountService) ? accountService.isChatEnabled : false" class="outline card" [ngClass]="{'expanded': !isCollapsed}" >
+    <div class="card-header" (click)="isCollapsed = !isCollapsed"> 
+        {{headerText}}
+    </div>
+    <div [ngbCollapse]="isCollapsed" class="scrollable-content-area">
+        <ng-content></ng-content>
+    </div>
+</div>

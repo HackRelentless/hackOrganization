@@ -12,10 +12,12 @@ import * as sdk from "matrix-js-sdk";
 export class MatrixService {
 
   baseURL = 'https://matrix.relentlessinnovation.org';
-  matrixUsername = ''
-  fullMatrixUsername = ''
-  accessToken = ''
+  matrixUsername = '';
+  fullMatrixUsername = '';
+  accessToken = '';
+
   client = null;
+  publicRooms = [];
 
   constructor(public accountService: AccountService, public http: HttpClient) {
     this.accountService.loadUserEvent.subscribe(isLoaded => {
@@ -120,6 +122,14 @@ export class MatrixService {
     });
   }
 
+
+  clientStates() {
+    this.client.on("event", (event) => {
+      console.log(event.getType());
+      console.log(event);
+    });
+  }
+
   // wrapper to create and start the client, post registrations
   startClient() {
     if(!this.client) {
@@ -149,6 +159,11 @@ export class MatrixService {
     }
     this.client.startClient({initialSyncLimit: 10}).then(started => {
       console.log('started client');
+      this.client.once('sync', (state, prevState, res) => {
+        console.log(state, res); // state will be 'PREPARED' when the client is ready to use
+        this.clientStates();
+        this.getPublicRooms();
+      });
     });
   }
 
@@ -160,15 +175,15 @@ export class MatrixService {
     this.client.stopClient();
   }
 
-  clientStates() {
-    this.client.on("sync", (state, prevState, data) => {
-      switch (state) {
-          case "PREPARED":
-            console.log('client is prepared');
-          break;
-      }
+  getPublicRooms() {
+    this.publicRooms = this.client.getRooms();
+    this.publicRooms.forEach((room, index, array) => {
+      this.publicRooms[index]['members'] = room.getJoinedMembers();
+        // members.forEach(member => {
+        //     console.log(member.name);
+        // });
     });
+    console.log('public rooms', this.publicRooms);
   }
-
 
 }
