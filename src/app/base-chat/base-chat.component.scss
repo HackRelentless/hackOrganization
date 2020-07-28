@@ -1,15 +1,23 @@
 .outline {
-    position: fixed;
-    bottom: 0;
-    right: 0;
     width: 15rem;
     background-color: rgb(200, 200, 200);
     border: 1px solid gray;
     border-bottom: 0px;
+    display: inline-block;
+    margin: 0 0.25rem;
+    vertical-align: bottom;
+    bottom: 0;
+    padding-bottom: 1rem;
 }
 
 .expanded {
     height: 20rem;
+}
+
+.consoled {
+    position: fixed;
+    bottom: 0;
+    right: 0;   
 }
 
 .scrollable-content-area{

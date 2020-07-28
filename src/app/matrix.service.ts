@@ -1,6 +1,6 @@
 import { AccountService } from './account.service'
 
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter, NgZone } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 import * as sdk from "matrix-js-sdk";
@@ -18,8 +18,10 @@ export class MatrixService {
 
   client = null;
   publicRooms = [];
+  enteredRooms = [];
+  enteredRoomsLoaded = new EventEmitter();
 
-  constructor(public accountService: AccountService, public http: HttpClient) {
+  constructor(public accountService: AccountService, public http: HttpClient, private ngZone: NgZone) {
     this.accountService.loadUserEvent.subscribe(isLoaded => {
       // Cognito user is loaded
       if(isLoaded) {
@@ -109,7 +111,7 @@ export class MatrixService {
         if(!isMatching){
           this.http.put(`${this.baseURL}/_matrix/client/r0/profile/${this.fullMatrixUsername}/displayname?${this.accessToken}`,
             {
-              displayname: this.accountService.currentUser.attributes.preferred_username
+              displayname: this.accountService.currentUser.attributes.preferred_username || this.matrixUsername
             }).subscribe(res => {
               resolve(true);
             }, error => {
@@ -132,7 +134,7 @@ export class MatrixService {
 
   // wrapper to create and start the client, post registrations
   startClient() {
-    if(!this.client) {
+    if(this.accountService.currentUser.attributes['custom:matrix-auth-json']) {
       this.client = sdk.createClient({
         baseUrl: this.baseURL,
         accessToken: this.accountService.currentUser.attributes['custom:matrix-auth-json']['access_token'],
@@ -143,6 +145,7 @@ export class MatrixService {
         let displayNamePromise;
         if(isAvailable) {
           this.registerUser().then(registered => {
+            this.accountService.loadUserEvent.emit(true);
             displayNamePromise = this.setDisplayName();
           });
         } else {
@@ -157,14 +160,19 @@ export class MatrixService {
         });
       });
     }
-    this.client.startClient({initialSyncLimit: 10}).then(started => {
-      console.log('started client');
-      this.client.once('sync', (state, prevState, res) => {
-        console.log(state, res); // state will be 'PREPARED' when the client is ready to use
-        this.clientStates();
-        this.getPublicRooms();
+    if(this.client) {
+      this.client.startClient({initialSyncLimit: 10}).then(started => {
+        console.log('started client');
+        this.client.once('sync', (state, prevState, res) => {
+          console.log(state, res); // state will be 'PREPARED' when the client is ready to use
+          this.clientStates();
+          this.getPublicRooms();
+          this.enteredRooms = (localStorage.getItem('enteredRooms')) ? JSON.parse(localStorage.getItem('enteredRooms')) : [];
+          console.log('enteredRooms', this.enteredRooms);
+          this.enteredRoomsLoaded.emit();
+        });
       });
-    });
+    }
   }
 
   stopClient() {
@@ -176,14 +184,56 @@ export class MatrixService {
   }
 
   getPublicRooms() {
-    this.publicRooms = this.client.getRooms();
-    this.publicRooms.forEach((room, index, array) => {
-      this.publicRooms[index]['members'] = room.getJoinedMembers();
-        // members.forEach(member => {
-        //     console.log(member.name);
-        // });
+    this.ngZone.run(() => {
+      this.client.publicRooms().then(rooms => {
+        console.log('rooms', rooms);
+        this.publicRooms = rooms['chunk'];
+        this.enteredRoomsLoaded.emit();
+      });
     });
-    console.log('public rooms', this.publicRooms);
+  }
+
+  enterIntoRoom(roomID) {
+    this.ngZone.run(() => {
+      for(var i in this.enteredRooms) {
+        if(roomID == this.enteredRooms[i]) {
+          console.log('already in that room');
+          return;
+        }
+      }
+      this.client.joinRoom(roomID, {
+        syncRoom: true
+      }).then(room => {
+        this.enteredRooms.push(roomID);
+        console.log('enteredRooms', this.enteredRooms);
+        localStorage.setItem('enteredRooms', JSON.stringify(this.enteredRooms));
+        this.enteredRoomsLoaded.emit();
+      });
+    });
+  }
+
+  getRoom(roomID) {
+    return this.client.getRoom(roomID);
+  }
+
+  leaveRoom(roomID) {
+    this.ngZone.run(() => {
+      for(var i = 0; i < this.enteredRooms.length; i++) {
+        if(roomID == this.enteredRooms[i]) {
+          this.enteredRooms.splice(i, 1);
+          break;
+        }
+      }
+      localStorage.setItem('enteredRooms', JSON.stringify(this.enteredRooms));
+    });
+  }
+
+  sendMessage(roomID, text) {
+    let body = {
+      "body": text,
+      "msgtype": "m.text"
+  };
+    this.client.sendMessage(roomID, body, '');
   }
 
 }

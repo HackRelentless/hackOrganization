@@ -1,3 +1,7 @@
-<hack-base-chat [headerText]="'test room'">
+<hack-base-chat [roomID]="roomID" [chatType]="'chat'" [headerText]="room?.name">
+    <div *ngIf="room">
+
+    </div>
+
 </hack-base-chat>
     

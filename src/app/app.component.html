@@ -32,3 +32,8 @@
 <router-outlet></router-outlet>
 
 <hack-chat-console></hack-chat-console>
+
+<div class="chat-dock">
+  <hack-chat-interface *ngFor="let roomID of matrixService.enteredRooms"
+    [roomID]="roomID"></hack-chat-interface>
+</div>

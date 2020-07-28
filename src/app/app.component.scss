@@ -1,0 +1,10 @@
+.chat-dock {
+    position: fixed;
+    bottom: 0;
+    max-height: 20rem;
+    // height: auto;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    width: calc(100% - 16rem);
+}

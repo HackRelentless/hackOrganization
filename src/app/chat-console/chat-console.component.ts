@@ -14,4 +14,8 @@ export class ChatConsoleComponent implements OnInit {
   ngOnInit() {
   }
 
+  enterRoom(room) {
+    this.matrixService.enterIntoRoom(room.room_id);
+  }
+
 }
