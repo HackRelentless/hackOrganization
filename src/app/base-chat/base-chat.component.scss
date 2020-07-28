@@ -17,11 +17,14 @@
 .consoled {
     position: fixed;
     bottom: 0;
-    right: 0;   
+    right: 0;
+    .scrollable-content-area {
+        overflow-y:auto;
+        -webkit-overflow-scrolling: touch;
+    }
 }
 
 .scrollable-content-area{
+    height: calc(100% - 48px);
     max-height: 20rem;
-    overflow-y:scroll;
-    -webkit-overflow-scrolling: touch;
 }

@@ -20,6 +20,7 @@ export class MatrixService {
   publicRooms = [];
   enteredRooms = [];
   enteredRoomsLoaded = new EventEmitter();
+  roomTimelineEvent = new EventEmitter();
 
   constructor(public accountService: AccountService, public http: HttpClient, private ngZone: NgZone) {
     this.accountService.loadUserEvent.subscribe(isLoaded => {
@@ -44,10 +45,14 @@ export class MatrixService {
           if(this.accountService.currentUser.attributes['custom:chat-enabled'] && 
             this.accountService.currentUser.attributes['custom:chat-enabled'] === 'true') {
               this.accountService.isChatEnabled = true;
-              this.startClient();
+              if(!this.client) {
+                this.startClient();
+              }
           } else {
             this.accountService.isChatEnabled = false;
-            this.stopClient();
+            if(this.client) {
+              this.stopClient();
+            }
           }
         }
       } 
@@ -130,17 +135,31 @@ export class MatrixService {
       console.log(event.getType());
       console.log(event);
     });
+
+    this.client.on("Room.timeline", (event) => {
+      console.log(event.getType());
+      console.log(event);
+      // if m.room.message
+      if(event.getType() == 'm.room.message') {
+        let eventBlob = {
+          roomID: event.getRoomId(),
+          event: event.event
+        }
+        console.log('message history', eventBlob);
+        this.roomTimelineEvent.emit(eventBlob);
+      }
+    });
   }
 
   // wrapper to create and start the client, post registrations
   startClient() {
-    if(this.accountService.currentUser.attributes['custom:matrix-auth-json']) {
+    if(!this.client && this.accountService.currentUser.attributes['custom:matrix-auth-json']) {
       this.client = sdk.createClient({
         baseUrl: this.baseURL,
         accessToken: this.accountService.currentUser.attributes['custom:matrix-auth-json']['access_token'],
         userId: this.accountService.currentUser.attributes['custom:matrix-auth-json']['user_id']
       });
-    } else {
+    } else if(!this.client){
       this.checkUsernameAvailibility().then(isAvailable => {
         let displayNamePromise;
         if(isAvailable) {
@@ -161,6 +180,7 @@ export class MatrixService {
       });
     }
     if(this.client) {
+      console.log('THE CLIENT', this.client);
       this.client.startClient({initialSyncLimit: 10}).then(started => {
         console.log('started client');
         this.client.once('sync', (state, prevState, res) => {
@@ -234,6 +254,10 @@ export class MatrixService {
       "msgtype": "m.text"
   };
     this.client.sendMessage(roomID, body, '');
+  }
+
+  getRoomTimeline(room) {
+    return room.timeline.map(t => t.event.content);
   }
 
 }

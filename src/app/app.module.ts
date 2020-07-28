@@ -18,6 +18,7 @@ import awsconfig from '../aws-exports';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 import { UiSwitchModule } from 'ngx-ui-switch';
+import {AutosizeModule} from 'ngx-autosize';
 
 // Components
 import { HomePageComponent } from './home-page/home-page.component';
@@ -34,6 +35,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ChatConsoleComponent } from './chat-console/chat-console.component';
 import { BaseChatComponent } from './base-chat/base-chat.component';
 import { ChatInterfaceComponent } from './chat-interface/chat-interface.component';
+import { MatrixService } from './matrix.service';
+import { MarkedPipe } from './marked.pipe';
 
 Amplify.configure(awsconfig);
 
@@ -49,7 +52,8 @@ Amplify.configure(awsconfig);
     LoginComponent,
     ChatConsoleComponent,
     BaseChatComponent,
-    ChatInterfaceComponent
+    ChatInterfaceComponent,
+    MarkedPipe
   ],
   imports: [
     AmplifyUIAngularModule,
@@ -64,9 +68,10 @@ Amplify.configure(awsconfig);
     BrowserAnimationsModule,
     BsDropdownModule.forRoot(),
     NgxIntlTelInputModule,
+    AutosizeModule,
     UiSwitchModule
   ],
-  providers: [AccountService],
+  providers: [AccountService, MatrixService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -37,3 +37,18 @@ p {
 // --amplify-tertiary-tint: #cf5346;
 // --amplify-tertiary-shade: #9b2d21;
 }
+
+
+// IN CHAT GLOBAL ADJUSTMENTS
+
+.markdown-chat{
+
+    p {
+        font-size: 0.85rem !important;
+        margin: 0;
+        font-family: inherit;
+        font-weight: inherit;
+        line-height: inherit;
+        letter-spacing: inherit;
+    }
+}
