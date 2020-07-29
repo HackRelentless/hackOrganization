@@ -53,7 +53,7 @@ Amplify.configure(awsconfig);
     ChatConsoleComponent,
     BaseChatComponent,
     ChatInterfaceComponent,
-    MarkedPipe
+    MarkedPipe,
   ],
   imports: [
     AmplifyUIAngularModule,

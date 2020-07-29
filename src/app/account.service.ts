@@ -21,13 +21,13 @@ export class AccountService {
       Hub.listen('auth', (authEvent) => {
         switch (authEvent.payload.event) {
           case 'signIn':
-            console.log('signed in');
+            // console.log('signed in');
             this.fetchCurrentUser();
             this.router.navigate(['/dashboard']);
             break;
 
           case 'signOut':
-            console.log('signed out');
+            // console.log('signed out');
             this.fetchCurrentUser();
             this.router.navigate(['/login']);
             break;
@@ -78,7 +78,7 @@ export class AccountService {
         this.fetchUserEvent.emit(true);
         res(true);
       }).catch(err => {
-        console.log('err', err)
+        // console.log('err', err)
         res(false);
       });
     });

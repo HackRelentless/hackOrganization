@@ -27,7 +27,7 @@ export class MatrixService {
       // Cognito user is loaded
       if(isLoaded) {
         if(this.accountService.currentUser) {
-          console.log('currUser', this.accountService.currentUser);
+          // console.log('currUser', this.accountService.currentUser);
           // if matrix auth json is added already, loadthem as variables
           if(this.accountService.currentUser.attributes['custom:matrix-auth-json']) {
             this.accessToken = `access_token=${this.accountService.currentUser.attributes['custom:matrix-auth-json']['access_token']}`;
@@ -39,7 +39,7 @@ export class MatrixService {
             let rand4 = ('0000' + Math.floor(Math.random()*10000).toString().substring(-2)).slice(-4);
             this.matrixUsername = `${emailname}${rand4}`;
           }
-          console.log('matrixUsername', this.matrixUsername);
+          // console.log('matrixUsername', this.matrixUsername);
 
           // matrix chat initialization based on variable
           if(this.accountService.currentUser.attributes['custom:chat-enabled'] && 
@@ -84,7 +84,7 @@ export class MatrixService {
         this.accountService.updateUser({
           'custom:matrix-auth-json': JSON.stringify(res)
         }).then(added => {
-          console.log('added', added);
+          // console.log('added', added);
           resolve(res);
         });
       }, error => {
@@ -98,13 +98,13 @@ export class MatrixService {
     return new Promise((resolve) => {
       this.http.get(`${this.baseURL}/_matrix/client/r0/profile/${this.fullMatrixUsername}/displayname`).subscribe(matrixAlias => {
         if(matrixAlias['displayname'] == this.accountService.currentUser.attributes.preferred_username) {
-          console.log('display name already matching');
+          // console.log('display name already matching');
           resolve(true);
         } else {
           resolve(false);
         }
       }, error => {
-        console.log('no display name for this user');
+        // console.log('no display name for this user');
         resolve(false);
       });
     });
@@ -131,21 +131,16 @@ export class MatrixService {
 
 
   clientStates() {
-    this.client.on("event", (event) => {
-      console.log(event.getType());
-      console.log(event);
-    });
-
     this.client.on("Room.timeline", (event) => {
-      console.log(event.getType());
-      console.log(event);
+      // console.log(event.getType());
+      // console.log(event);
       // if m.room.message
       if(event.getType() == 'm.room.message') {
         let eventBlob = {
           roomID: event.getRoomId(),
           event: event.event
         }
-        console.log('message history', eventBlob);
+        // console.log('message history', eventBlob);
         this.roomTimelineEvent.emit(eventBlob);
       }
     });
@@ -168,11 +163,11 @@ export class MatrixService {
             displayNamePromise = this.setDisplayName();
           });
         } else {
-          console.log('name already taken');
+          // console.log('name already taken');
           displayNamePromise = this.setDisplayName();
         }
         Promise.all([displayNamePromise]).then((matched) => {
-          console.log('restarting start client function', matched);
+          // console.log('restarting start client function', matched);
           if(!matched[0]) {
             this.startClient();
           }
@@ -180,15 +175,15 @@ export class MatrixService {
       });
     }
     if(this.client) {
-      console.log('THE CLIENT', this.client);
+      // console.log('THE CLIENT', this.client);
       this.client.startClient({initialSyncLimit: 10}).then(started => {
-        console.log('started client');
+        // console.log('started client');
         this.client.once('sync', (state, prevState, res) => {
-          console.log(state, res); // state will be 'PREPARED' when the client is ready to use
+          // console.log(state, res); // state will be 'PREPARED' when the client is ready to use
           this.clientStates();
           this.getPublicRooms();
           this.enteredRooms = (localStorage.getItem('enteredRooms')) ? JSON.parse(localStorage.getItem('enteredRooms')) : [];
-          console.log('enteredRooms', this.enteredRooms);
+          // console.log('enteredRooms', this.enteredRooms);
           this.enteredRoomsLoaded.emit();
         });
       });
@@ -197,7 +192,7 @@ export class MatrixService {
 
   stopClient() {
     if(!this.client) {
-      console.log('client was not found');
+      // console.log('client was not found');
       return;
     }
     this.client.stopClient();
@@ -206,7 +201,7 @@ export class MatrixService {
   getPublicRooms() {
     this.ngZone.run(() => {
       this.client.publicRooms().then(rooms => {
-        console.log('rooms', rooms);
+        // console.log('rooms', rooms);
         this.publicRooms = rooms['chunk'];
         this.enteredRoomsLoaded.emit();
       });
@@ -217,7 +212,7 @@ export class MatrixService {
     this.ngZone.run(() => {
       for(var i in this.enteredRooms) {
         if(roomID == this.enteredRooms[i]) {
-          console.log('already in that room');
+          // console.log('already in that room');
           return;
         }
       }
@@ -225,7 +220,7 @@ export class MatrixService {
         syncRoom: true
       }).then(room => {
         this.enteredRooms.push(roomID);
-        console.log('enteredRooms', this.enteredRooms);
+        // console.log('enteredRooms', this.enteredRooms);
         localStorage.setItem('enteredRooms', JSON.stringify(this.enteredRooms));
         this.enteredRoomsLoaded.emit();
       });

@@ -87,7 +87,7 @@ export class AccountSettingsComponent implements OnInit {
       this.isSuccessAlert = isSuccess;
       this.alertType = (isError)? 'danger' : 'warning';
       this.alertTimeout = setTimeout((x) => {
-        console.log('x', x);
+        // console.log('x', x);
         this.isSuccessAlert = false;
         clearTimeout(this.alertTimeout);
       }, 5000);
@@ -116,10 +116,10 @@ export class AccountSettingsComponent implements OnInit {
         // make modal for confirmation
         this.verificationModal = this.modalService.open(verifycode, {centered: true});
         this.verificationModal.result.then(closed => {
-          console.log('closed', closed);
+          // console.log('closed', closed);
           this.isVerificationState = false;
         }, dismissed => {
-          console.log('dismissed', dismissed);
+          // console.log('dismissed', dismissed);
           this.isVerificationState = false;
         });
       } else {

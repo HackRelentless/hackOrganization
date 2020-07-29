@@ -1,8 +1,8 @@
 import { Component, Input, NgZone, ChangeDetectorRef, OnInit, ViewChild, ElementRef,  } from '@angular/core';
 import { AccountService } from '../account.service';
 import { MatrixService } from '../matrix.service';
-import { Subscription } from 'rxjs';
-
+import { Subscription, timer } from 'rxjs';
+import { distinctUntilChanged, map } from 'rxjs/operators';
 import * as moment from 'moment';
 
 @Component({
@@ -11,6 +11,7 @@ import * as moment from 'moment';
   styleUrls: ['./chat-interface.component.scss']
 })
 export class ChatInterfaceComponent implements OnInit {
+  @ViewChild('messageArea', {static: true}) messageArea;
   @Input('roomID') roomID;
 
   room = null;
@@ -20,51 +21,56 @@ export class ChatInterfaceComponent implements OnInit {
   messageHistory = [];
   
   constructor(public accountService: AccountService, public matrixService: MatrixService, private changeRef: ChangeDetectorRef) {
+    this.matrixService.roomTimelineEvent.subscribe(incoming => {
+      // console.log('incoming message event', incoming);
+      if(incoming && incoming.roomID == this.roomID) {
+        let event = incoming.event;
+        this.messageHistory.push({
+          displayName: this.room.getMember(event.sender).rawDisplayName,
+          message: event.content.body,
+          timestamp: timer(0, 1000).pipe(
+            map(() => moment(event.origin_server_ts).fromNow()),
+            distinctUntilChanged()
+          )
+        });
+        this.changeRef.detectChanges();
+        this.scrollToBottom();
+      }
+    });
   }
 
   ngOnInit() {
-    console.log("ON INIT", this.roomID);
+    // console.log("ON INIT", this.roomID);
     if(this.roomID) {
       this.room = this.matrixService.getRoom(this.roomID);
         if(this.room) {
-          console.log('THIS ROOM IS LOADED NOW');
+          // console.log('THIS ROOM IS LOADED NOW');
           this.processRoomEvents();
           this.changeRef.detectChanges();
-          
-
+          this.scrollToBottom();
         }
     }
   }
 
   processRoomEvents() {
     let roomTimeline = this.room.timeline.map(t => t.event);
-    console.log('roomtimeline', roomTimeline);
+    // console.log('roomtimeline', roomTimeline);
     roomTimeline.forEach(event => {
       switch(event.type) {
         case 'm.room.message':
-          this.messageHistory.push({
-            displayName: this.room.getMember(event.sender).rawDisplayName,
-            message: event.content.body,
-            timestamp: moment(event.origin_server_ts).fromNow()
+          this.matrixService.roomTimelineEvent.emit({
+            roomID: this.roomID,
+            event: event
           });
           break;
       }
     });
-    console.log('messageHistory', this.messageHistory);
-    this.matrixService.roomTimelineEvent.subscribe(incoming => {
-      if(incoming && incoming.roomID == this.roomID) {
-        let event = incoming.event;
-        this.messageHistory.push({
-          displayName: this.room.getMember(event.sender).rawDisplayName,
-          message: event.content.body,
-          timestamp: moment(event.origin_server_ts).fromNow()
-        });
-      }
-    })
+    // console.log('messageHistory', this.messageHistory);
+    
   }
 
   onResized(event) {
-    console.log('onResize', event);
+    // console.log('onResize', event);
     if(event > 34) {
       this.messageAreaHeight = 'calc(100% - ' + event + 'px)';
     } else {
@@ -72,10 +78,18 @@ export class ChatInterfaceComponent implements OnInit {
     }
   }
 
+  scrollToBottom() {
+    try {
+      this.messageArea.nativeElement.scrollTop = this.messageArea.nativeElement.scrollHeight;
+    } catch (error) {
+      // console.log('err', error);
+    }
+  }
+
   sendMessage(event) {
     event.preventDefault();
     if(this.messageText) {
-      console.log('sending message', this.messageText);
+      // console.log('sending message', this.messageText);
       this.matrixService.sendMessage(this.roomID, this.messageText);
       this.messageText = null;
     }
