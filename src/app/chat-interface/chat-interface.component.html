@@ -1,0 +1,33 @@
+<hack-base-chat [hidden]="!room" [roomID]="roomID" [chatType]="'chat'" [headerText]="room?.name">
+
+    <ul class="list-group list-group-flush message-area" [ngStyle]="{'height': messageAreaHeight}" #messageArea>
+        <li *ngFor="let object of messageHistory" class="list-group-item flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+              <span><b>{{object.displayName}}</b></span>
+              <small class="text-muted">{{object.timestamp | async}}</small>
+            </div>
+            <span class="markdown-chat" [innerHTML]="object.message | marked"></span>
+          </li>
+      </ul>
+
+    <div class="card-footer p-0">
+        <div class="input-group">
+            <textarea autosize 
+            [(ngModel)]="messageText"
+            [minRows]="1"
+            (resized)="onResized($event)"
+            (keydown.enter)="sendMessage($event)" 
+            type="text" 
+            rows="1" 
+            class="form-control textarea-field" 
+            placeholder="Type a message..."></textarea>
+            <div class="input-group-append">
+                <button (click)="sendMessage($event)" class="input-group-text send-btn" id="basic-addon2">Send</button>
+            </div>
+        </div>
+    </div>
+
+
+  
+</hack-base-chat>
+    

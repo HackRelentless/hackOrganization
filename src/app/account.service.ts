@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 export class AccountService {
 
   currentUser: any;
+  isChatEnabled = false;
   loadUserEvent = new EventEmitter();
   fetchUserEvent = new EventEmitter();
 
@@ -20,13 +21,13 @@ export class AccountService {
       Hub.listen('auth', (authEvent) => {
         switch (authEvent.payload.event) {
           case 'signIn':
-            console.log('signed in');
+            // console.log('signed in');
             this.fetchCurrentUser();
             this.router.navigate(['/dashboard']);
             break;
 
           case 'signOut':
-            console.log('signed out');
+            // console.log('signed out');
             this.fetchCurrentUser();
             this.router.navigate(['/login']);
             break;
@@ -38,6 +39,9 @@ export class AccountService {
   fetchCurrentUser(shouldBypass = false) {
       Auth.currentAuthenticatedUser({bypassCache: shouldBypass}).then(user => {
         this.currentUser = user;
+        if(this.currentUser.attributes['custom:matrix-auth-json']) {
+          this.currentUser.attributes['custom:matrix-auth-json'] = JSON.parse(this.currentUser.attributes['custom:matrix-auth-json']);
+        }
         this.loadUserEvent.emit(true);
       }).catch(err => {
         this.currentUser = null;
@@ -74,7 +78,7 @@ export class AccountService {
         this.fetchUserEvent.emit(true);
         res(true);
       }).catch(err => {
-        console.log('err', err)
+        // console.log('err', err)
         res(false);
       });
     });

@@ -3,6 +3,7 @@ import { AccountService } from '../account.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { SearchCountryField, TooltipLabel, CountryISO } from 'ngx-intl-tel-input';
+import { MatrixService } from '../matrix.service';
 
 @Component({
   selector: 'hack-account-settings',
@@ -20,12 +21,14 @@ export class AccountSettingsComponent implements OnInit {
   alertTimeout: any;
   successText = '';
 
+  isLoading = false;
+
   SearchCountryField = SearchCountryField;
 	TooltipLabel = TooltipLabel;
 	CountryISO = CountryISO;
 	preferredCountries: CountryISO[] = [CountryISO.UnitedStates, CountryISO.UnitedKingdom];
 
-  constructor(public accountService: AccountService, private fb: FormBuilder, public modalService: NgbModal) {
+  constructor(public accountService: AccountService, public matrixService: MatrixService, private fb: FormBuilder, public modalService: NgbModal) {
     this.profileForm = this.fb.group({
       preferred_username: [''],
       email: [''],
@@ -84,7 +87,7 @@ export class AccountSettingsComponent implements OnInit {
       this.isSuccessAlert = isSuccess;
       this.alertType = (isError)? 'danger' : 'warning';
       this.alertTimeout = setTimeout((x) => {
-        console.log('x', x);
+        // console.log('x', x);
         this.isSuccessAlert = false;
         clearTimeout(this.alertTimeout);
       }, 5000);
@@ -113,10 +116,10 @@ export class AccountSettingsComponent implements OnInit {
         // make modal for confirmation
         this.verificationModal = this.modalService.open(verifycode, {centered: true});
         this.verificationModal.result.then(closed => {
-          console.log('closed', closed);
+          // console.log('closed', closed);
           this.isVerificationState = false;
         }, dismissed => {
-          console.log('dismissed', dismissed);
+          // console.log('dismissed', dismissed);
           this.isVerificationState = false;
         });
       } else {
@@ -139,5 +142,16 @@ export class AccountSettingsComponent implements OnInit {
       this.verificationModal.dismiss();
     });
   }
+
+  toggleChat() {
+    this.isLoading = true;
+    let toggle = (this.accountService.isChatEnabled) ? 'false': 'true';
+    this.accountService.updateUser({
+      'custom:chat-enabled': toggle
+    }).then(isChanged => {
+      this.isLoading = false;
+    });
+  }
+
 
 }

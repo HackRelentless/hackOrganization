@@ -1,0 +1,21 @@
+.message-area {
+    height: calc(100% - 34px);
+    overflow-y: auto;
+
+}
+
+.textarea-field {
+    resize: none;
+    font-size: 0.85rem;
+    min-height: 34px !important;
+}
+
+.list-group-item {
+    padding: 6px;
+    font-size: 0.85rem;
+    white-space: normal;
+}
+
+.send-btn {
+    font-size: 0.85rem;
+}

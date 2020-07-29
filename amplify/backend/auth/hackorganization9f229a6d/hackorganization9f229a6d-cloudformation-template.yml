@@ -194,7 +194,22 @@ Resources:
           Name: bio
           StringAttributeConstraints:
             MaxLength: 256
-            MinLength: 1     
+            MinLength: 1
+
+        -
+          AttributeDataType: "String"
+          Mutable: true
+          Name: chat-enabled
+          StringAttributeConstraints:
+            MaxLength: 256
+            MinLength: 1
+            
+        -
+          AttributeDataType: "String"
+          Mutable: true
+          Name: matrix-auth-json
+          StringAttributeConstraints:
+            MinLength: 1 
       
       AutoVerifiedAttributes: !Ref autoVerifiedAttributes
       

@@ -1,0 +1,13 @@
+<div *ngIf="(accountService) ? accountService.isChatEnabled : false" class="outline card" 
+    [ngClass]="{'expanded': !isCollapsed, 'consoled': chatType == 'console'}" >
+    <div class="card-header" (click)="isCollapsed = !isCollapsed"> 
+        {{headerText}}
+
+        <span *ngIf="chatType == 'chat'" class="float-right" (click)="leaveRoom()">
+            <fa-icon [icon]="['fas', 'times']"></fa-icon>
+        </span>
+    </div>
+    <div [ngbCollapse]="isCollapsed" class="scrollable-content-area">
+        <ng-content></ng-content>
+    </div>
+</div>
