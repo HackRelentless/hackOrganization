@@ -71,7 +71,7 @@ export class MatrixService {
     });
   }
 
-  registerUser(): Promise<boolean> {
+  registerUser() {
     return new Promise((resolve, reject) => {
       this.http.post(`${this.baseURL}/_matrix/client/r0/register`, {
         username: this.matrixUsername,
@@ -94,7 +94,7 @@ export class MatrixService {
   }
 
 
-  checkDisplayNameMatch(): Promise<boolean> {
+  checkDisplayNameMatch() {
     return new Promise((resolve) => {
       this.http.get(`${this.baseURL}/_matrix/client/r0/profile/${this.fullMatrixUsername}/displayname`).subscribe(matrixAlias => {
         if(matrixAlias['displayname'] == this.accountService.currentUser.attributes.preferred_username) {
