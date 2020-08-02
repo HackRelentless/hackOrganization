@@ -5,7 +5,6 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 
 import * as sdk from "matrix-js-sdk";
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -21,6 +20,7 @@ export class MatrixService {
   enteredRooms = [];
   enteredRoomsLoaded = new EventEmitter();
   roomTimelineEvent = new EventEmitter();
+  
 
   constructor(public accountService: AccountService, public http: HttpClient, private ngZone: NgZone) {
     this.accountService.loadUserEvent.subscribe(isLoaded => {
@@ -149,10 +149,13 @@ export class MatrixService {
   // wrapper to create and start the client, post registrations
   startClient() {
     if(!this.client && this.accountService.currentUser.attributes['custom:matrix-auth-json']) {
+      let accessToken = this.accountService.currentUser.attributes['custom:matrix-auth-json']['access_token'];
+      let userID = this.accountService.currentUser.attributes['custom:matrix-auth-json']['user_id'];
       this.client = sdk.createClient({
         baseUrl: this.baseURL,
-        accessToken: this.accountService.currentUser.attributes['custom:matrix-auth-json']['access_token'],
-        userId: this.accountService.currentUser.attributes['custom:matrix-auth-json']['user_id']
+        // @ts-ignore
+        accessToken: accessToken,
+        userId: userID
       });
     } else if(!this.client){
       this.checkUsernameAvailibility().then(isAvailable => {
