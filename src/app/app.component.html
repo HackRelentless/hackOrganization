@@ -5,8 +5,14 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse">
-        <ul *ngIf="isSignedIn" class="navbar-nav ml-auto mt-2 mt-lg-0">
-          <li ngbDropdown class="nav-item" display="dynamic">
+        <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+          <li class="nav-item mr-2" display="dynamic">
+            <a [routerLink]="['/document']" [queryParams]="{ type: 'manifesto'}" class="btn btn-outline-dark">Manifesto</a>
+          </li>
+          <li class="nav-item mr-2" display="dynamic">
+            <a [routerLink]="['/document']" [queryParams]="{ type: 'hackersCharge'}" class="btn btn-outline-dark">Hacker's Charge</a>
+          </li>
+          <li *ngIf="isSignedIn" ngbDropdown class="nav-item" display="dynamic">
             <a class="nav-link dropdown-toggle" id="navbarDropdown" ngbDropdownToggle>
               {{accountService.currentUser?.attributes.preferred_username || accountService.currentUser?.attributes.email}}
             </a>
@@ -19,13 +25,10 @@
               </div>
             </div>
           </li>
+          <li *ngIf="!isSignedIn" ngbDropdown class="nav-item" display="dynamic">
+            <a routerLink="dashboard" class="btn btn-outline-dark">Members</a>
+          </li>
         </ul>
-
-        <ul *ngIf="!isSignedIn" class="navbar-nav ml-auto mt-2 mt-lg-0">
-            <li ngbDropdown class="nav-item" display="dynamic">
-                <a routerLink="dashboard" class="btn btn-outline-dark">Members</a>
-            </li>
-          </ul>
       </div>
     </nav>
 

@@ -29,7 +29,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
 
 import { AccountService } from './account.service';
-import { ManifestoPageComponent } from './manifesto-page/manifesto-page.component';
+import { DocumentPageComponent } from './document-page/document-page.component';
 import { LoginComponent } from './login/login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ChatConsoleComponent } from './chat-console/chat-console.component';
@@ -48,7 +48,7 @@ Amplify.configure(awsconfig);
     InteractiveLogoComponent,
     ChapterMapComponent,
     AccountSettingsComponent,
-    ManifestoPageComponent,
+    DocumentPageComponent,
     LoginComponent,
     ChatConsoleComponent,
     BaseChatComponent,

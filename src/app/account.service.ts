@@ -13,6 +13,7 @@ export class AccountService {
   isChatEnabled = false;
   loadUserEvent = new EventEmitter();
   fetchUserEvent = new EventEmitter();
+  documentPage = 'manifesto';
 
   constructor(public ngZone: NgZone, public router: Router) {
     this.fetchCurrentUser();
