@@ -36,6 +36,7 @@ import { ChatConsoleComponent } from './chat-console/chat-console.component';
 import { BaseChatComponent } from './base-chat/base-chat.component';
 import { ChatInterfaceComponent } from './chat-interface/chat-interface.component';
 import { MatrixService } from './matrix.service';
+import { GeneralService } from './general.service';
 import { MarkedPipe } from './marked.pipe';
 
 Amplify.configure(awsconfig);
@@ -71,7 +72,7 @@ Amplify.configure(awsconfig);
     AutosizeModule,
     UiSwitchModule
   ],
-  providers: [AccountService, MatrixService],
+  providers: [AccountService, MatrixService, GeneralService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../account.service';
+import { GeneralService } from '../general.service';
+
+import * as moment from 'moment';
 
 @Component({
   selector: 'hack-home-page',
@@ -7,15 +10,21 @@ import { AccountService } from '../account.service';
   styleUrls: ['./home-page.component.scss']
 })
 export class HomePageComponent implements OnInit {
-  isReadingManifesto = {
-    height: '25rem',
-    button: 1,
-    gradient: 'none'
-  };
 
-  constructor(public accountService: AccountService) { }
+  calendarItems = [];
+
+  constructor(public accountService: AccountService, public generalService: GeneralService) { }
 
   ngOnInit() {
+    this.getCalendarData();
+  }
+
+  getCalendarData() {
+    this.generalService.fetchPublicCalendar().then(data => {
+      this.calendarItems = data['items'].sort((a, b) => {
+        return <any>new Date(a.start.dateTime) - <any>new Date(b.start.dateTime)
+      });
+    });
   }
 
 }
