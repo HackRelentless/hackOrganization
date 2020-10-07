@@ -40,14 +40,19 @@
     </div>
     <div class="col-sm-6">
       <section class="section">
-        <h4 class="text-center">Event Schedule</h4>
+        <h4 class="text-center">Event Schedule (EST)</h4>
         <br>
         <ngb-accordion #acc="ngbAccordion">
           <ngb-panel *ngFor="let item of calendarItems; index as i">
             <ng-template ngbPanelHeader>
               <button ngbPanelToggle class="btn container-fluid">
                 <div class="row">
-                  <div class="col-sm-4">{{item.start.dateTime | date:'shortDate'}}</div>
+                  <!-- <div class="col-sm-1">
+                    
+                  </div> -->
+                  <div class="col-sm-4">
+                    <fa-icon *ngIf="item.upNext" [icon]="['fas', 'exclamation']" class="fa-lg float-left pt-1 hacker-green"></fa-icon>
+                    {{item.start.dateTime | date:'shortDate'}}</div>
                   <div class="col-sm-4">{{item.summary}}</div>
                   <div class="col-sm-4">{{item.start.dateTime | date:'shortTime'}} - {{item.end.dateTime | date:'shortTime'}}</div>
                 </div>
@@ -55,7 +60,8 @@
             </ng-template>
       
             <ng-template ngbPanelContent>
-              <div class="text-center">{{item.description}}</div>
+              <div *ngIf="item.description" class="text-center">{{item.description}}</div>
+              <div *ngIf="!item.description" class="text-center">No description for this event</div>
             </ng-template>
           </ngb-panel>
         </ngb-accordion>
@@ -69,11 +75,12 @@
 </div>
 
 
-
+<hr>
 
 
 <section id="socials" class="section">
-  <p>Chat with us</p>
+  <h4 class="text-center">About Us</h4>
+  <br>
   <div class="container-fluid">
     <div class="row">
       <div class="col text-center">
@@ -105,6 +112,7 @@
     </div>
   </div>
 </section>
+<br>
 <hr>
 <!-- <section>
   <div class="section">
@@ -120,6 +128,7 @@
 <hr> -->
 <section id="chapters">
   <h4 class="text-center">Find A Chapter</h4>
+  <br>
   <div class="container-fluid mb-lg-4">
       <hack-chapter-map></hack-chapter-map>
   </div>

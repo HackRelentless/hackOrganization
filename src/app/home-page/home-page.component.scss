@@ -47,6 +47,10 @@
     /* "transparent" only works here because == rgba(0,0,0,0) */
     background-image: linear-gradient(0deg, white 33%, transparent 100%);
   }
+
+  .hacker-green {
+      color: rgb(0, 202, 0);
+  }
   
 
 @keyframes fadein {

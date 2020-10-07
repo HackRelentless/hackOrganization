@@ -10,6 +10,7 @@ import { MatrixService } from './matrix.service';
 export class AppComponent {
   title = 'hackOrganization';
   isSignedIn = false;
+  isMenuCollapsed = true;
 
   constructor(public matrixService: MatrixService, public accountService: AccountService, public cdr: ChangeDetectorRef) {
     this.accountService.loadUserEvent.subscribe(isLoaded => {
