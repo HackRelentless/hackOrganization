@@ -60,7 +60,7 @@
             </ng-template>
       
             <ng-template ngbPanelContent>
-              <div *ngIf="item.description" class="text-center">{{item.description}}</div>
+              <div [innerHTML]="item.description" *ngIf="item.description" class="text-center"></div>
               <div *ngIf="!item.description" class="text-center">No description for this event</div>
             </ng-template>
           </ngb-panel>
