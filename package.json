@@ -29,7 +29,7 @@
     "google-libphonenumber": "^3.2.10",
     "intl-tel-input": "^14.1.0",
     "marked": "^1.1.1",
-    "matrix-js-sdk": "^8.0.0",
+    "matrix-js-sdk": "^19.7.0",
     "moment": "^2.29.0",
     "ngx-autosize": "^1.8.0",
     "ngx-bootstrap": "^5.6.1",
